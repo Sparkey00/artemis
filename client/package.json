@@ -19,6 +19,7 @@
     "roboto-fontface": "*",
     "vee-validate": "^4.5.11",
     "vue": "^3.2.13",
+    "vue-axios": "^3.4.1",
     "vue-router": "^4.0.3",
     "vuetify": "npm:@vuetify/nightly@next",
     "vuex": "^4.0.0",
