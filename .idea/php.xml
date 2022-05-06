@@ -111,6 +111,15 @@
       <path value="$PROJECT_DIR$/api/vendor/psr/event-dispatcher" />
       <path value="$PROJECT_DIR$/api/vendor/psr/http-message" />
       <path value="$PROJECT_DIR$/api/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/api/vendor/swiftmailer/swiftmailer" />
+      <path value="$PROJECT_DIR$/api/vendor/fruitcake/laravel-cors" />
+      <path value="$PROJECT_DIR$/api/vendor/fideloper/proxy" />
+      <path value="$PROJECT_DIR$/api/vendor/facade/ignition" />
+      <path value="$PROJECT_DIR$/api/vendor/facade/flare-client-php" />
+      <path value="$PROJECT_DIR$/api/vendor/asm89/stack-cors" />
+      <path value="$PROJECT_DIR$/api/vendor/opis/closure" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/polyfill-iconv" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/polyfill-php73" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0" />

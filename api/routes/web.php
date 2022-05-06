@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +12,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function (\App\Http\Services\BreedService $service) {
-    return $service->getFavBreed();
+Route::get('/', function () {
+    return view('welcome');
 });

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->smallInteger('gender');
             $table->date('date_of_birth');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
