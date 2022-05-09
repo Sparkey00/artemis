@@ -116,7 +116,6 @@
       <path value="$PROJECT_DIR$/api/vendor/fideloper/proxy" />
       <path value="$PROJECT_DIR$/api/vendor/facade/ignition" />
       <path value="$PROJECT_DIR$/api/vendor/facade/flare-client-php" />
-      <path value="$PROJECT_DIR$/api/vendor/asm89/stack-cors" />
       <path value="$PROJECT_DIR$/api/vendor/opis/closure" />
       <path value="$PROJECT_DIR$/api/vendor/symfony/polyfill-iconv" />
       <path value="$PROJECT_DIR$/api/vendor/symfony/polyfill-php73" />

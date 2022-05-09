@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,7 +24,6 @@ Route::post('/login', [AuthController::class, 'login']);
 
 // Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
-//    Route::delete('/products/{id}', [ProductController::class, 'destroy']);
     Route::get('/breed/{id}', [\App\Http\Controllers\BreedController::class, 'index']);
     Route::post('/logout', [AuthController::class, 'logout']);
 });

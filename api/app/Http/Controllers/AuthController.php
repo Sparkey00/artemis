@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use JetBrains\PhpStorm\ArrayShape;
 
 class AuthController extends Controller
 {
@@ -63,7 +64,13 @@ class AuthController extends Controller
         return response($response, 201);
     }
 
-    public function logout(Request $request) {
+    /**
+     * @param Request $request
+     * @return string[]
+     */
+    #[ArrayShape(['message' => "string"])]
+    public function logout(Request $request): array
+    {
         auth()->user()->tokens()->delete();
 
         return [
