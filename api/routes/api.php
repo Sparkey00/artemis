@@ -24,7 +24,9 @@ Route::post('/login', [AuthController::class, 'login']);
 
 // Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get('/breed/{id}', [\App\Http\Controllers\BreedController::class, 'index']);
+    Route::get('/breed', [\App\Http\Controllers\BreedController::class, 'index']);
+    Route::post('/breed/update/{id}', [\App\Http\Controllers\BreedController::class, 'update']);
+    Route::post('/breed/store', [\App\Http\Controllers\BreedController::class, 'store']);
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 

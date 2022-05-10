@@ -2,47 +2,48 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Status;
+use App\Http\Requests\Breed\StoreBreedRequest;
 use App\Models\Breed;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class BreedController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function index(Request $request, int $id)
+    public function index(Request $request)
     {
-        dd(Breed::all());
+        return response(
+            Breed::orderBy('id', 'asc')->paginate($request->get('perPage', 20)),
+            Status::OK->value
+        );
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param StoreBreedRequest $request
+     * @return Response
      */
-    public function create()
+    public function store(StoreBreedRequest $request): Response
     {
-        //
-    }
+        $fields = $request->validated();
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        $model = Breed::create([
+            'name' => $fields['name']
+        ]);
+        return response(['model' => $model], Status::OK->value);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Breed  $breed
-     * @return \Illuminate\Http\Response
+     * @param Breed $breed
+     * @return Response
      */
     public function show(Breed $breed)
     {
@@ -52,8 +53,8 @@ class BreedController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Breed  $breed
-     * @return \Illuminate\Http\Response
+     * @param Breed $breed
+     * @return Response
      */
     public function edit(Breed $breed)
     {
@@ -63,20 +64,26 @@ class BreedController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Breed  $breed
-     * @return \Illuminate\Http\Response
+     * @param StoreBreedRequest $request
+     * @param int $id
+     * @return Response
      */
-    public function update(Request $request, Breed $breed)
+    public function update(StoreBreedRequest $request, int $id)
     {
-        //
+        $fields = $request->validated();
+        if(Breed::whereId($id)->update($fields)) {
+            return response(['modelId' => $id], Status::OK->value);
+        } else {
+            return response([], Status::BadRequest->value);
+        }
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Breed  $breed
-     * @return \Illuminate\Http\Response
+     * @param Breed $breed
+     * @return Response
      */
     public function destroy(Breed $breed)
     {
