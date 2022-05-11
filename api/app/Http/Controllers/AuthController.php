@@ -2,43 +2,58 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Status;
+use App\Http\Requests\User\CreateUserRequest;
 use App\Models\User;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use JetBrains\PhpStorm\ArrayShape;
 
 class AuthController extends Controller
 {
-    public function register(Request $request) {
-        $fields = $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|string|unique:users,email',
-            'password' => 'required|string',
-            'c_password' => 'required|same:password',
-            'gender' => 'required|integer',
-            'date_of_birth' => 'required|date|after:start_date'
-        ]);
+    /**
+     * @param CreateUserRequest $request
+     * @return Application|ResponseFactory|Response
+     */
+    public function register(CreateUserRequest $request): Response|Application|ResponseFactory
+    {
+        $fields = $request->validated();
+        try {
+            DB::beginTransaction();
+            $user = User::create($fields);
 
-        $user = User::create([
-            'name' => $fields['name'],
-            'email' => $fields['email'],
-            'password' => bcrypt($fields['password']),
-            'gender' => $fields['gender'],
-            'date_of_birth' => $fields['date_of_birth'],
-        ]);
+            $token = $user->createToken('myapptoken')->plainTextToken;
 
-        $token = $user->createToken('myapptoken')->plainTextToken;
-
-        $response = [
-            'user' => $user,
-            'token' => $token
-        ];
-
-        return response($response, 201);
+            $response = [
+                'user' => $user,
+                'token' => $token
+            ];
+            DB::commit();
+            $status = Status::OK->value;
+        } catch (\Throwable $exception) {
+            DB::rollBack();
+            Log::debug($exception->getMessage());
+            $response = [
+                'message' => $exception->getMessage(),
+                'line' => $exception->getLine(),
+                'file' => $exception->getFile()
+            ];
+            $status = Status::InternalServerError->value;
+        }
+        return response($response, $status);
     }
 
-    public function login(Request $request) {
+    /**
+     * @param Request $request
+     * @return Application|ResponseFactory|Response
+     */
+    public function login(Request $request)
+    {
         $fields = $request->validate([
             'email' => 'required|string',
             'password' => 'required|string'
@@ -48,10 +63,10 @@ class AuthController extends Controller
         $user = User::where('email', $fields['email'])->first();
 
         // Check password
-        if(!$user || !Hash::check($fields['password'], $user->password)) {
+        if (!$user || !Hash::check($fields['password'], $user->password)) {
             return response([
-                'message' => 'Bad creds'
-            ], 401);
+                'message' => 'Bad credentials'
+            ], Status::Unauthorised->value);
         }
 
         $token = $user->createToken('myapptoken')->plainTextToken;

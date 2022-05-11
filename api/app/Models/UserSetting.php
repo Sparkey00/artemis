@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use DateTime;
+use DateTimeZone;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Psy\Util\Json;
 
 /**
  * App\Models\UserSetting
@@ -30,4 +34,41 @@ use Illuminate\Database\Eloquent\Model;
 class UserSetting extends Model
 {
     use HasFactory;
+
+    /**
+     * @var array
+     */
+    protected $guarded = [];
+
+    protected $primaryKey = 'user_id';
+
+    /**
+     * @param User $user
+     * @return void
+     * @throws \Exception
+     */
+    public static function createDefault(User $user): void
+    {
+        $age = (new DateTime($user->date_of_birth))
+            ->diff(new DateTime('now'))
+            ->y;
+        $minAge = $age > 1 ? $age - 1 : $age;
+        $maxAge = $age + 1;
+
+        self::create([
+            'user_id' => $user->id,
+            'radius_meters' => 10000,
+            'pref_breeds' => Json::encode([]),
+            'age_from' => $minAge,
+            'age_to' => $maxAge
+        ]);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }
