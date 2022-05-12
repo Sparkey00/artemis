@@ -2,25 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Status;
+use App\Http\Requests\User\UpdateSettingsRequest;
 use App\Models\UserSetting;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class UserSettingController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function index()
+    public function index(int $id)
     {
-        //
+        $settings = UserSetting::whereUserId($id)->first();
+
+        return response($settings->attributesToArray(), Status::OK->value);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -30,8 +35,8 @@ class UserSettingController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -41,8 +46,8 @@ class UserSettingController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\UserSetting  $userSetting
-     * @return \Illuminate\Http\Response
+     * @param UserSetting $userSetting
+     * @return Response
      */
     public function show(UserSetting $userSetting)
     {
@@ -52,8 +57,8 @@ class UserSettingController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\UserSetting  $userSetting
-     * @return \Illuminate\Http\Response
+     * @param UserSetting $userSetting
+     * @return Response
      */
     public function edit(UserSetting $userSetting)
     {
@@ -63,20 +68,22 @@ class UserSettingController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\UserSetting  $userSetting
-     * @return \Illuminate\Http\Response
+     * @param UpdateSettingsRequest $request
+     * @param int $id
+     * @return Response
      */
-    public function update(Request $request, UserSetting $userSetting)
+    public function update(UpdateSettingsRequest $request, int $id): Response
     {
-        //
+        $response = UserSetting::whereUserId($id)->update($request->validated());
+
+        return response(['updated' => $response], Status::OK->value);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\UserSetting  $userSetting
-     * @return \Illuminate\Http\Response
+     * @param UserSetting $userSetting
+     * @return void
      */
     public function destroy(UserSetting $userSetting)
     {
