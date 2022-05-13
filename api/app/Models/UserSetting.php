@@ -49,9 +49,14 @@ class UserSetting extends Model
      */
     public static function createDefault(User $user): void
     {
-        $age = (new DateTime($user->date_of_birth))
-            ->diff(new DateTime('now'))
-            ->y;
+        if(is_string($user->date_of_birth)) {
+            $age = $user->getAge();
+        } else {
+            $age = $user->date_of_birth
+                ->diff(new DateTime('now'))
+                ->y;
+        }
+
         $minAge = $age > 1 ? $age - 1 : $age;
         $maxAge = $age + 1;
 

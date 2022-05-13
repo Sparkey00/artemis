@@ -31,11 +31,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/user-setting/update/{id}', [\App\Http\Controllers\UserSettingController::class, 'update']);
     Route::get('/user-setting/{id}', [\App\Http\Controllers\UserSettingController::class, 'index']);
 
+    Route::get('/user', [\App\Http\Controllers\UserController::class, 'index']);
+
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
 
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});

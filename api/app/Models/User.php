@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use DateTime;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -26,6 +28,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
  * @property-read int|null $tokens_count
+ * @property UserSetting $settings
  * @method static \Database\Factories\UserFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
@@ -60,6 +63,12 @@ class User extends Authenticatable
         'date_of_birth'
     ];
 
+    protected const GENDERS = [
+        0 => 'Female',
+        1 => 'Male',
+        2 => 'Other'
+    ];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -78,4 +87,31 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * @param int $gender
+     * @return array
+     */
+    public static function getGendersForSearch(int $gender): array
+    {
+        return array_diff(array_keys(self::GENDERS), [$gender]);
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function settings(): HasOne
+    {
+        return $this->hasOne(UserSetting::class);
+    }
+
+    /**
+     * @return int
+     * @throws \Exception
+     */
+    public function getAge(): int
+    {
+        return (new DateTime($this->date_of_birth))->diff(new DateTime('now'))->y;
+
+    }
 }
