@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use DateTime;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -19,7 +18,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property int $gender
- * @property string $date_of_birth
+ * @property DateTime $date_of_birth
  * @property string|null $description
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -112,6 +111,5 @@ class User extends Authenticatable
     public function getAge(): int
     {
         return (new DateTime($this->date_of_birth))->diff(new DateTime('now'))->y;
-
     }
 }

@@ -76,7 +76,6 @@ class BreedController extends Controller
         } else {
             return response([], Status::BadRequest->value);
         }
-
     }
 
     /**

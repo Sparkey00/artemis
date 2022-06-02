@@ -2,45 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\UserService;
 use App\Models\User;
 use DateTime;
+use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
-     * @throws \Exception
+     * @param UserService $userService
+     * @return Response
      */
-    public function index()
+    public function index(UserService $userService): Response
     {
-        /** @var User $user */
-        $user = auth()->user();
-        $settings = $user->settings;
-        $age = (new DateTime($user->date_of_birth))->diff(new DateTime('now'))->y;;
-
-        $dateTo = (new DateTime('now'))->modify(('-' . $settings->age_from . ' years'));
-        $dateFrom = (new DateTime('now'))->modify(('-' . $settings->age_to . ' years'));
-//        DB::enableQueryLog(); // Enable query log
-        $users = User::query()
-            ->leftJoin('user_settings', 'user_id', '=', 'users.id')
-            ->whereDate('date_of_birth', '>=', $dateFrom->format('Y-m-d H:i:s'))
-            ->whereDate('date_of_birth', '<=', $dateTo->format('Y-m-d H:i:s'))
-            ->whereIn('gender', User::getGendersForSearch($user->gender))
-            ->get();
-//        dd(DB::getQueryLog());
-
-
-        return response($users);
+        return response($userService->searchMatches());
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -50,8 +35,8 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -61,8 +46,8 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return Response
      */
     public function show(User $user)
     {
@@ -72,8 +57,8 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return Response
      */
     public function edit(User $user)
     {
@@ -83,9 +68,9 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param User $user
+     * @return Response
      */
     public function update(Request $request, User $user)
     {
@@ -95,8 +80,8 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return Response
      */
     public function destroy(User $user)
     {

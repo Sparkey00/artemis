@@ -23,10 +23,18 @@ Route::post('/login', [AuthController::class, 'login']);
 
 
 // Protected routes
+
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get('/breed', [\App\Http\Controllers\BreedController::class, 'index']);
-    Route::post('/breed/update/{id}', [\App\Http\Controllers\BreedController::class, 'update']);
-    Route::post('/breed/store', [\App\Http\Controllers\BreedController::class, 'store']);
+
+    Route::prefix('breed')->group(function () {
+        Route::get('/', [\App\Http\Controllers\BreedController::class, 'index']);
+        Route::post('/update/{id}', [\App\Http\Controllers\BreedController::class, 'update']);
+        Route::post('/store', [\App\Http\Controllers\BreedController::class, 'store']);
+    });
+
+    Route::prefix('subscription')->group(function () {
+        Route::get('/', [\App\Http\Controllers\SubscriptionController::class, 'index']);
+    });
 
     Route::put('/user-setting/update/{id}', [\App\Http\Controllers\UserSettingController::class, 'update']);
     Route::get('/user-setting/{id}', [\App\Http\Controllers\UserSettingController::class, 'index']);

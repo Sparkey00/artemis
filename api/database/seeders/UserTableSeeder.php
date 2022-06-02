@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\UserSetting;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -19,6 +20,7 @@ class UserTableSeeder extends Seeder
     {
         try {
             User::truncate();
+            UserSetting::truncate();
 
             $faker = \Faker\Factory::create();
 
@@ -34,7 +36,7 @@ class UserTableSeeder extends Seeder
             ]);
 
             // And now let's generate a few dozen users for our app:
-            for ($i = 0; $i < 10; $i++) {
+            for ($i = 0; $i < 1000; $i++) {
                 User::create([
                     'name' => $faker->name,
                     'email' => $faker->email,
@@ -45,6 +47,7 @@ class UserTableSeeder extends Seeder
                 ]);
             }
         } catch (\Throwable $exception) {
+            dd($exception->getMessage());
             Log::debug(
                 $exception->getMessage(),
                 ['line' => $exception->getLine(), 'file' => $exception->getFile()]

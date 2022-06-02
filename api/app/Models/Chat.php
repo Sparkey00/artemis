@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Eloquent;
+use Barryvdh\LaravelIdeHelper\Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
@@ -37,7 +38,10 @@ class Chat extends Model
         return $this->hasMany(ChatMessage::class);
     }
 
-    public function users()
+    /**
+     * @return BelongsToMany
+     */
+    public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
     }
