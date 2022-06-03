@@ -23,6 +23,18 @@ class UserController extends Controller
     }
 
     /**
+     * @param UserService $userService
+     * @param int $likedUserId
+     * @return Response
+     * @throws \Throwable
+     */
+    public function like(UserService $userService, int $likedUserId): Response
+    {
+        return response(['liked_back' => $userService->processLike($likedUserId)]);
+
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return Response

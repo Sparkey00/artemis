@@ -40,6 +40,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/user-setting/{id}', [\App\Http\Controllers\UserSettingController::class, 'index']);
 
     Route::get('/user', [\App\Http\Controllers\UserController::class, 'index']);
+    Route::get('/user/like/{likedUserId}', [\App\Http\Controllers\UserController::class, 'like']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 });

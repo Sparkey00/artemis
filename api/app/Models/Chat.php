@@ -30,6 +30,8 @@ class Chat extends Model
 {
     use HasFactory;
 
+    public const STATUS_ACTIVE = 1;
+    protected $guarded = [];
     /**
      * @return HasMany
      */
