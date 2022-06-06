@@ -58,7 +58,6 @@ class UserService implements SearchServiceInterface
      */
     public function processLike(int $likedUserId): bool
     {
-        //todo test
         Redis::set($this->likeKey($likedUserId, $this->user->id), true,'ex', 60 * 10);
 
         $isLiked = Redis::get($this->likeKey($likedUserId, $this->user->id));

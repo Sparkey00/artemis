@@ -53,8 +53,6 @@ class ChatService implements SearchServiceInterface
             \DB::rollBack();
             \Log::debug($exception);
         }
-
-
     }
 
     /**
