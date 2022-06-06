@@ -33,6 +33,7 @@ class Chat extends Model
 
     public const STATUS_ACTIVE = 1;
     protected $guarded = [];
+
     /**
      * @return HasMany
      */
@@ -42,7 +43,7 @@ class Chat extends Model
     }
 
     /**
-     * @return HasManyThrough
+     * @return BelongsToMany
      */
     public function users(): BelongsToMany
     {
