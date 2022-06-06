@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChatMessage\ChatMessageRequest;
+use App\Http\Services\ChatService;
+use App\Models\Chat;
 use App\Models\ChatMessage;
 use Illuminate\Http\Request;
 
@@ -22,9 +25,9 @@ class ChatMessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(ChatService $chatService, ChatMessageRequest $request)
     {
-        //
+        return $chatService->sendMessage($request->post());
     }
 
     /**

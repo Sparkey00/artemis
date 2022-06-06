@@ -34,6 +34,7 @@ class ChatMessage extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
     /**
      * @return HasOne
      */

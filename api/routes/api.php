@@ -36,6 +36,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/', [\App\Http\Controllers\SubscriptionController::class, 'index']);
     });
 
+    Route::prefix('chat')->group(function () {
+        Route::get('/', [\App\Http\Controllers\ChatController::class, 'index']);
+    });
+    Route::prefix('chat-message')->group(function () {
+        Route::post('/create', [\App\Http\Controllers\ChatMessageController::class, 'create']);
+    });
+
     Route::put('/user-setting/update/{id}', [\App\Http\Controllers\UserSettingController::class, 'update']);
     Route::get('/user-setting/{id}', [\App\Http\Controllers\UserSettingController::class, 'index']);
 

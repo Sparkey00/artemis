@@ -177,7 +177,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         /** Custom Providers */
         \App\Providers\UserServiceProvider::class,
-        \App\Providers\SubscriptionProvider::class
+        \App\Providers\SubscriptionProvider::class,
+        \App\Providers\ChatServiceProvider::class
     ],
 
     /*

@@ -4,6 +4,8 @@ namespace App\Models;
 
 use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -111,5 +113,13 @@ class User extends Authenticatable
     public function getAge(): int
     {
         return (new DateTime($this->date_of_birth))->diff(new DateTime('now'))->y;
+    }
+
+    /**
+     * @return HasManyThrough
+     */
+    public function chats(): HasManyThrough
+    {
+        return $this->hasManyThrough(Chat::class, ChatUser::class);
     }
 }
