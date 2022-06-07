@@ -3,15 +3,14 @@
 namespace App\Http\Services;
 
 use App\Http\Interfaces\SearchServiceInterface;
-use App\Models\Chat;
+use App\Http\Interfaces\UserServiceInterface;
 use App\Models\User;
 use DateTime;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Redis;
 
-class UserService implements SearchServiceInterface
+class UserService implements SearchServiceInterface, UserServiceInterface
 {
     private Authenticatable $user;
     public function __construct(Authenticatable $user)

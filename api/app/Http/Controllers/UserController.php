@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Interfaces\UserServiceInterface;
 use App\Http\Services\UserService;
 use App\Models\User;
-use DateTime;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -14,10 +13,10 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param UserService $userService
+     * @param UserServiceInterface $userService
      * @return Response
      */
-    public function index(UserService $userService): Response
+    public function index(UserServiceInterface $userService): Response
     {
         return response($userService->searchMatches());
     }
@@ -28,7 +27,7 @@ class UserController extends Controller
      * @return Response
      * @throws \Throwable
      */
-    public function like(UserService $userService, int $likedUserId): Response
+    public function like(UserServiceInterface $userService, int $likedUserId): Response
     {
         return response(['liked_back' => $userService->processLike($likedUserId)]);
 

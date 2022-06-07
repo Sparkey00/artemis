@@ -2,11 +2,12 @@
 
 namespace App\Providers;
 
+use App;
+use App\Http\Services\tests\TestUserService;
 use App\Http\Services\UserService;
-use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 
-class UserServiceProvider extends ServiceProvider implements DeferrableProvider
+class UserServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
@@ -15,20 +16,17 @@ class UserServiceProvider extends ServiceProvider implements DeferrableProvider
      */
     public function register(): void
     {
-        $this->app->bind(UserService::class, function () {
-            return new UserService(auth()->user());
-        });
+        if (App::runningUnitTests()) {
+            $this->app->bind(App\Http\Interfaces\UserServiceInterface::class, function () {
+                return new TestUserService(App\Models\User::find(1));
+            });
+        } else {
+            $this->app->bind(App\Http\Interfaces\UserServiceInterface::class, function () {
+                return new UserService(auth()->user());
+            });
+        }
     }
 
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides(): array
-    {
-        return [UserService::class];
-    }
 
     /**
      * Bootstrap any application services.
