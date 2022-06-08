@@ -2,8 +2,7 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Enums\Status;
 use Tests\TestCase;
 
 class UserTest extends TestCase
@@ -20,9 +19,23 @@ class UserTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function testIndex()
+    public function testIndexUnauthenticated()
     {
-        $response = $this->get('/user');
-        $response->dd();
+        $response = $this->get('/api/user');
+        $response->assertUnauthorized();
+    }
+
+    public function testIndexAuthenticated()
+    {
+        $loginResponse = $this->post('/api/login',
+            [
+                'email' => 'admin@test.com',
+                'password' => 'admin'
+            ]
+        );
+        $loginResponse->assertStatus(Status::Created->value);
+        $content = \Nette\Utils\Json::decode($loginResponse->getContent());
+        $response = $this->get('/api/user', ['Authorization'=> "Bearer $content->token"]);
+        $response->assertStatus(200);
     }
 }
