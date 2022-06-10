@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Interfaces\UserServiceInterface;
+use App\Http\Repositories\Interfaces\UserRepositoryInterface;
 use App\Http\Services\UserService;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,12 +14,12 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param UserServiceInterface $userService
+     * @param UserRepositoryInterface $repository
      * @return Response
      */
-    public function index(UserServiceInterface $userService): Response
+    public function index(UserRepositoryInterface $repository): Response
     {
-        return response($userService->searchMatches());
+        return response($repository->searchMatches());
     }
 
     /**

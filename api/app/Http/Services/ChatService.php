@@ -2,16 +2,13 @@
 
 namespace App\Http\Services;
 
-use App\Http\Interfaces\SearchServiceInterface;
 use App\Models\Chat;
 use App\Models\ChatMessage;
 use App\Models\ChatUser;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Support\Collection;
 
-class ChatService implements SearchServiceInterface
+class ChatService
 {
-
     private Authenticatable $user;
 
     /**
@@ -53,29 +50,6 @@ class ChatService implements SearchServiceInterface
             \DB::rollBack();
             \Log::debug($exception);
         }
-    }
-
-    /**
-     * @param array $params
-     * @return Collection
-     */
-    public function search(array $params = []): Collection
-    {
-        return $this->findByUserId($this->user->id);
-    }
-
-    /**
-     * @param int $userId
-     * @return Collection
-     */
-    public function findByUserId(int $userId): Collection
-    {
-        return Chat::query()->with('users', 'messages')
-            ->wherein(
-                'id',
-                ChatUser::select('chat_id')->where('user_id', '=', $userId)
-            )
-            ->get();
     }
 
     /**

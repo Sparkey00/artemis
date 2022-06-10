@@ -2,11 +2,10 @@
 
 namespace App\Http\Services\tests;
 
-use App\Http\Interfaces\SearchServiceInterface;
 use App\Http\Interfaces\UserServiceInterface;
 use App\Models\User;
 
-class TestUserService implements SearchServiceInterface, UserServiceInterface
+class TestUserService implements UserServiceInterface
 {
     private $user;
     public function __construct(User $user)

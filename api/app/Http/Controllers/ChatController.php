@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Services\ChatService;
+use App\Http\Repositories\Interfaces\ChatRepositoryInterface;
 use App\Models\Chat;
 use Illuminate\Http\Request;
 
@@ -13,9 +13,9 @@ class ChatController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(ChatService $service)
+    public function index(ChatRepositoryInterface $repository)
     {
-        return response($service->search());
+        return response($repository->search());
     }
 
     /**

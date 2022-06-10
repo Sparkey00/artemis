@@ -29,6 +29,8 @@ use Illuminate\Support\Carbon;
  * @method static Builder|ChatMessage whereUpdatedAt($value)
  * @method static Builder|ChatMessage whereUserId($value)
  * @mixin Eloquent
+ * @property-read \App\Models\Chat $chat
+ * @property-read \App\Models\User|null $user
  */
 class ChatMessage extends Model
 {

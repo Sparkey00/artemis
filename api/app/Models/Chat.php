@@ -26,6 +26,10 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Chat whereStatus($value)
  * @method static Builder|Chat whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ChatMessage[] $messages
+ * @property-read int|null $messages_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $users
+ * @property-read int|null $users_count
  */
 class Chat extends Model
 {

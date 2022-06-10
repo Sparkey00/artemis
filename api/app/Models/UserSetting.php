@@ -30,6 +30,7 @@ use Psy\Util\Json;
  * @method static \Illuminate\Database\Eloquent\Builder|UserSetting whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UserSetting whereUserId($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\User $user
  */
 class UserSetting extends Model
 {

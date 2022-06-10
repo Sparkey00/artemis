@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Http\Repositories;
 
-use App\Models\Subscription;
 use Illuminate\Database\Eloquent\Collection;
 
-class SubscriptionService
+abstract class BaseRepository implements Interfaces\BaseRepositoryInterface
 {
+    protected string $modelClass;
     /**
      * @param array $params
      * @return Collection|array
      */
     public function search(array $params = []): Collection|array
     {
-        $query = Subscription::query();
+        /** @var \Illuminate\Database\Eloquent\Builder $query */
+        $query = $this->modelClass::query();
 
         foreach ($params as $name => $param) {
             $query->where($name, '=', $param);

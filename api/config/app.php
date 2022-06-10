@@ -178,7 +178,10 @@ return [
         /** Custom Providers */
         \App\Providers\UserServiceProvider::class,
         \App\Providers\SubscriptionProvider::class,
-        \App\Providers\ChatServiceProvider::class
+        \App\Providers\ChatServiceProvider::class,
+        /** Repositories */
+        \App\Providers\UserRepositoryProvider::class,
+        \App\Providers\ChatRepositoryProvider::class
     ],
 
     /*
