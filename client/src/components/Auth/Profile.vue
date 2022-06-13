@@ -2,7 +2,7 @@
   <div class="container">
     <header class="jumbotron">
       <h3>
-        <strong>{{currentUser.username}}</strong> Profile
+        <strong>{{currentUser.user.name}}</strong> Profile
       </h3>
     </header>
     <p>
@@ -11,30 +11,32 @@
     </p>
     <p>
       <strong>Id:</strong>
-      {{currentUser.id}}
+      {{currentUser.user.id}}
     </p>
     <p>
       <strong>Email:</strong>
-      {{currentUser.email}}
+      {{currentUser.user.email}}
     </p>
     <strong>Authorities:</strong>
     <ul>
-      <li v-for="role in currentUser.roles" :key="role">{{role}}</li>
+      <li v-for="role in currentUser.user.roles" :key="role">{{role}}</li>
     </ul>
   </div>
 </template>
 <script>
+import Store from "@/store";
+
 export default {
   name: 'Profile',
   computed: {
     currentUser() {
-      return this.$store.state.auth.user;
+      return Store.state.auth.user;
     }
   },
   mounted() {
-    // if (!this.currentUser) {
-    //   this.$router.push('/login');
-    // }
+    if (!this.currentUser) {
+      this.$router.push('/login');
+    }
   }
 };
 </script>
