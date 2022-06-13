@@ -16,7 +16,7 @@ axios.defaults.baseURL = 'http://127.0.0.1:8000/api';
 // See below for an example using Custom instance defaults instead.
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + getCookie('Token')
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + getCookie('arToken')
 createApp(App)
   .use(router)
   .use(store)
