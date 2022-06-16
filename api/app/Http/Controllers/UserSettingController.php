@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\Status;
 use App\Http\Requests\User\UpdateSettingsRequest;
+use App\Http\Resources\UserSettingResource;
 use App\Models\UserSetting;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -19,7 +20,7 @@ class UserSettingController extends Controller
     {
         $settings = UserSetting::whereUserId($id)->first();
 
-        return response($settings->attributesToArray(), Status::OK->value);
+        return response(new UserSettingResource($settings), Status::OK->value);
     }
 
     /**

@@ -1,6 +1,6 @@
 <template>
   <v-footer
-    class="text-center d-flex flex-column"
+    class="text-center d-flex flex-column !bg-dark-purple !text-alice"
     max-height="150px"
     width="100%"
     bottom
@@ -11,7 +11,6 @@
       <v-btn
         v-for="social in socials"
         :key="social.icon"
-        color="info"
         class="mx-4"
         :icon="social.icon"
         variant="text"

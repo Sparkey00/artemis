@@ -17,7 +17,7 @@ export default createVuetify(
             primary: '#457b9d', // #E53935
             secondary: '#a8dadc', // #FFCDD2
             background: '#f1faee',
-            info: '#1d3557',
+            info: '#ff66b0',
           }
         },
       },

@@ -1,14 +1,13 @@
 <template>
   <v-app>
-    <v-card>
       <v-layout>
         <v-app-bar
-          color="primary"
           prominent
+          class="!bg-yellow-green !text-dark-purple"
         >
           <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
-          <v-toolbar-title>Artemis</v-toolbar-title>
+          <v-toolbar-title class="font-mono text-sky-400"><router-link to="/">Artemis</router-link></v-toolbar-title>
 
           <v-spacer></v-spacer>
 
@@ -28,12 +27,11 @@
           ></v-list>
         </v-navigation-drawer>
 
-        <v-main>
-          <router-view></router-view>
+        <v-main class="!bg-alice">
+          <router-view ></router-view>
         </v-main>
-      </v-layout>
-    </v-card>
     <ArtemisFooter></ArtemisFooter>
+    </v-layout>
   </v-app>
 </template>
 
